@@ -1,5 +1,6 @@
 const express = require("express");
 const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/user");
 const db = require("./db");
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -24,6 +25,7 @@ app.use(
 );
 
 app.use("/v1", authRoutes);
+app.use("/v1", userRoutes);
 
 // app.listen(PORT, () => {
 //   console.log(`Server is running on port ${PORT}`);

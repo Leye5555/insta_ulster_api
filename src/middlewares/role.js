@@ -4,9 +4,15 @@ module.exports = (roles) => (req, res, next) => {
   if (!roles.includes(req.user.role)) {
     return res.status(403).json({ error: "Forbidden" });
   }
-  // stop users from updating other users
-  if (req.user.role === "user" && req.params.id !== req.user._id) {
+  // stop users or regular admins from updating other users
+  // super admins can update any user
+  if (
+    (req.method === "PUT" || req.method === "DELETE") &&
+    req.params.id !== req.user._id &&
+    req.user.role !== "super_admin"
+  ) {
     return res.status(403).json({ error: "Forbidden" });
   }
+
   next();
 };

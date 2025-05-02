@@ -76,7 +76,7 @@ const roles = require("../middlewares/role");
  *
  *
  */
-router.get("/users", auth, roles(["admin"]), getUsers);
+router.get("/users", auth, roles(["admin", "user", "super_admin"]), getUsers);
 
 /**
  * @openapi
@@ -147,7 +147,12 @@ router.get("/users", auth, roles(["admin"]), getUsers);
  *                   description: Error message
  *
  */
-router.get("/users/:id", auth, roles(["admin", "user"]), getUser);
+router.get(
+  "/users/:id",
+  auth,
+  roles(["admin", "user", "super_admin"]),
+  getUser
+);
 /**
  * @openapi
  * /v1/users/{id}:
@@ -230,7 +235,7 @@ router.get("/users/:id", auth, roles(["admin", "user"]), getUser);
  *                   description: Error message
  *
  */
-router.put("/users/:id", auth, roles(["admin", "user"]), updateUser);
+router.put("/users/:id", auth, roles(["super_admin"]), updateUser);
 /**
  * @openapi
  *
@@ -300,6 +305,6 @@ router.put("/users/:id", auth, roles(["admin", "user"]), updateUser);
  *                   type: string
  *                   description: Error message
  */
-router.delete("/users/:id", auth, roles(["admin", "user"]), deleteUser);
+router.delete("/users/:id", auth, roles(["super_admin"]), deleteUser);
 
 module.exports = router;
